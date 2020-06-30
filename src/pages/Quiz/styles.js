@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         flexDirection: 'row',
-        justifyContent: "space-between", 
+        justifyContent: "space-between",
     },
     button: {
         width: '50%',
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 20
+        marginTop: 10
     },
     buttonText: {
         marginLeft: 8,
@@ -84,6 +84,19 @@ const styles = StyleSheet.create({
         alignSelf: "flex-end",
         marginEnd: 30,
         marginBottom: 10
+    },
+    pointText: {
+        color: '#FFF',
+        fontSize: 16,
+        fontFamily: 'Roboto_500Medium',
+        marginBottom: 5,
+        marginEnd: 5
+    },
+    point: {
+        marginBottom: 10,
+        flexDirection: "row",
+        alignItems: "flex-end",
+        alignSelf: "flex-end"
     },
 });
 

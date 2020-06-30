@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Feather as Icon } from '@expo/vector-icons';
 
 import styles from './styles';
 import api from '../../services/api';
@@ -22,10 +21,9 @@ const Quiz = () => {
     const [points, setPoints] = useState(0);
 
     useEffect(() => {
-        
         api.get(`questions/${routeParams.quiz_id}`).then(response => {
             setQuiz(response.data);
-            setQuestion(response.data[0]);
+            setQuestion(response.data[numberQuestion - 1]);
         }).catch(reject => {
             navigation.goBack();
         });
@@ -35,8 +33,8 @@ const Quiz = () => {
         }).catch(reject => {
             navigation.goBack();
         });*/
+    },);
 
-    }, []);
     useEffect(() => {
         if (numberQuestion <= 10) {
             setQuestion(quiz[numberQuestion - 1]);
@@ -51,6 +49,16 @@ const Quiz = () => {
         }
     }, [numberQuestion]);
 
+    useEffect(() => {
+        setPoints(points - 30);
+        setNumberQuestion(numberQuestion + 1);
+        setQuestion(quiz[numberQuestion - 1]);
+    }, [jumps]);
+
+    /*useEffect(() => {
+
+    }, []);*/
+
     function chosenAlternative(alternative) {
         if (alternative === question.rightAnswer) {
             setHits(hits + 1);
@@ -62,25 +70,25 @@ const Quiz = () => {
     }
 
     function nextQuestion() {
-        
+
     }
 
     function jumpQuestion() {
-        if (jumps <= 0) {
-
+        if (jumps <= 0 || points <= 0) {
+            //MODAL
         } else {
-            setPoints(points - 30);
             setJumps(jumps - 1);
-            setNumberQuestion(numberQuestion + 1);
         }
     }
 
     return (
         <>
             <ScrollView style={styles.container}>
-                <TouchableOpacity>
-                    <Icon name="arrow-left" size={20} color="#fff" />
-                </TouchableOpacity>
+                <View style={styles.point}>
+                    <Text style={styles.pointText}>{points}</Text>
+                    <Image source={require('../../assets/icons-moedas.png')}
+                    />
+                </View>
 
                 <View style={styles.quizInfo}>
                     <Text style={styles.quizInfoText}>Questão: {numberQuestion}/10</Text>
