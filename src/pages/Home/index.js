@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, ScrollView, TextInput } from 'react-native';
+import { View, Text, ScrollView, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-// import { Container } from './styles';
 
 import styles from './styles';
 
@@ -9,13 +8,14 @@ const Home = () => {
 
     const navigation = useNavigation();
 
- /*   function handleNavigationToQuiz() {
+    function handleNavigationToQuiz() {
         navigation.navigate('Quiz', {
+            user_id: 1,
             quiz_id: 2,
-            jump: 5
+            jumps: 5
         });
     }
-*/
+
     return ( //INICIANDO TELA DE HOME, ALGUMAS COISAS VÃO SER ACESSADAS ATRAVÉS DO BACKEND E CONSEQUENTEMENTE SUBSTITUÍDAS
         //Teste
         <>
@@ -32,6 +32,10 @@ const Home = () => {
                 <View>
                     <TextInput style={styles.textInput}> Pesquisar </TextInput>
                 </View>
+
+                <TouchableOpacity onPress={handleNavigationToQuiz} style={{flex: 1, alignItems: "center", marginTop: 100}}>
+                    <Text>Quiz</Text>
+                </TouchableOpacity>
 
             </ScrollView>
         </>

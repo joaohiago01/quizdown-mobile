@@ -5,7 +5,7 @@ import React from 'react';
 import { Roboto_400Regular, Roboto_500Medium, useFonts } from '@expo-google-fonts/roboto';
 import { Ubuntu_700Bold } from '@expo-google-fonts/ubuntu';
 
-import Quiz from './src/pages/Quiz';
+import Routes from './src/routes';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,7 +20,7 @@ export default function App() {
     return (
       <>
         <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
-        <Quiz />
+        <Routes />
       </>
     );
   }
