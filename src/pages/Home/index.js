@@ -1,5 +1,5 @@
-import React, { Component, useEffect } from 'react';
-import { View, Text, ScrollView, TextInput, TouchableOpacity, SvgUri, Image } from 'react-native';
+import React, { Component, useEffect, useState} from 'react';
+import { View, Text, ScrollView, TextInput, TouchableOpacity, SvgUri } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import api from '../../services/api';
@@ -38,14 +38,18 @@ const Home = () => {
                 </View>
 
                 <View>
-                    <TextInput style={styles.textInput}> Pesquisar </TextInput>
+                    <TextInput style={styles.textInput}> <Text> Pesquisar </Text> </TextInput>
                 </View>
 
-                {quizzes.map(quiz => (
-                    <TouchableOpacity onPress={handleNavigationToQuiz}>
-                        <Text> {quiz.name} </Text>
-                    </TouchableOpacity>
-                ))};
+                <Text>
+                    {quizzes.map(quiz => (
+                        <TouchableOpacity onPress={handleNavigationToQuiz}>
+                            <Text> {quiz.name} </Text>
+                            <SvgUri width={42} heigth={42} uri="http://192.168.100.33:19000/uploads/naruto.jpg"></SvgUri>
+                        </TouchableOpacity>
+                    ))};
+                </Text>
+                
 
             </ScrollView>
         </>
