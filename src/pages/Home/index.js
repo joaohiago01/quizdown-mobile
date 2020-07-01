@@ -1,12 +1,21 @@
-import React from 'react';
-import { View, Text, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import React, { Component, useEffect } from 'react';
+import { View, Text, ScrollView, TextInput, TouchableOpacity, SvgUri, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+import api from '../../services/api';
 import styles from './styles';
+
 
 const Home = () => {
 
+    const [quizzes, setQuizzes] = useState([]);
     const navigation = useNavigation();
+
+    useEffect(() => {
+        api.get('quizzes').then(response => {
+            setQuizzes(response.data);
+        });
+    }, []);  
 
     function handleNavigationToQuiz() {
         navigation.navigate('Quiz', {
@@ -14,10 +23,9 @@ const Home = () => {
             quiz_id: 2,
             jumps: 5
         });
-    }
+    }  
 
-    return ( //INICIANDO TELA DE HOME, ALGUMAS COISAS VÃO SER ACESSADAS ATRAVÉS DO BACKEND E CONSEQUENTEMENTE SUBSTITUÍDAS
-        //Teste
+    return (
         <>
             <ScrollView style={styles.container}>
                 <View style={styles.quizDownText}>
@@ -33,9 +41,11 @@ const Home = () => {
                     <TextInput style={styles.textInput}> Pesquisar </TextInput>
                 </View>
 
-                <TouchableOpacity onPress={handleNavigationToQuiz} style={{flex: 1, alignItems: "center", marginTop: 100}}>
-                    <Text>Quiz</Text>
-                </TouchableOpacity>
+                {quizzes.map(quiz => (
+                    <TouchableOpacity onPress={handleNavigationToQuiz}>
+                        <Text> {quiz.name} </Text>
+                    </TouchableOpacity>
+                ))};
 
             </ScrollView>
         </>
