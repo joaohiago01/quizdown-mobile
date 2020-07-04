@@ -23,6 +23,7 @@ const Quiz = () => {
     useEffect(() => {
         api.get(`questions/${routeParams.quiz_id}`).then(response => {
             setQuiz(response.data);
+            console.log(response.data);
             setQuestion(response.data.filter((index) => {
                 return index === numberQuestion - 1;
             }));
@@ -35,7 +36,7 @@ const Quiz = () => {
         }).catch(reject => {
             navigation.goBack();
         });*/
-    },);
+    },[]);
 
     useEffect(() => {
         if (numberQuestion <= 10) {

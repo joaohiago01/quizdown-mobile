@@ -20,10 +20,10 @@ const Home = () => {
         });
     }, []);
 
-    function handleNavigationToQuiz() {
+    function handleNavigationToQuiz(quiz_id) {
         navigation.navigate('Quiz', {
             user_id: 1,
-            quiz_id: 2,
+            quiz_id: quiz_id,
             jumps: 5
         });
     }
@@ -49,11 +49,11 @@ const Home = () => {
 
                         {quizzes.map(quiz => (
                             <TouchableOpacity
-                                onPress={handleNavigationToQuiz}
+                                onPress={() => {handleNavigationToQuiz(quiz.id)}}
                                 key={String(quiz.id)}>
-                                <Text style={styles.quizNameText}> {quiz.name} </Text>
-                               
-                                <Text style={styles.quizDescripitionText}> {quiz.description} </Text>
+                                <Text style={styles.quizNameText}>{quiz.name}</Text>
+                                <SvgUri width={300} height={300} uri={quiz.image_url}></SvgUri>
+                                <Text style={styles.quizDescripitionText}>{quiz.description}</Text>
                             </TouchableOpacity>
                         ))}
 
