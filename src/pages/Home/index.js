@@ -30,7 +30,7 @@ const Home = () => {
 
     return (
         <>
-            <ScrollView style={styles.container}>
+            <View style={styles.container}>
                 <View style={styles.quizDownText}>
                     <Text style={styles.quizDownText}> QuizDown </Text>
                 </View>
@@ -44,16 +44,23 @@ const Home = () => {
                     <TextInput style={styles.textInput}> <Text> Pesquisar </Text> </TextInput>
                 </View>
 
-                {quizzes.map(quiz => (
-                    <TouchableOpacity
-                        onPress={handleNavigationToQuiz}
-                        key={String(quiz.id)}>
-                        <Text> {quiz.name} </Text>
-                        <SvgUri width={42} heigth={42} uri={quiz.image_url}></SvgUri>
-                    </TouchableOpacity>
-                ))}
+                <View style={styles.quizListContainer}>
+                    <ScrollView style={styles.quizList}>
 
-            </ScrollView>
+                        {quizzes.map(quiz => (
+                            <TouchableOpacity
+                                onPress={handleNavigationToQuiz}
+                                key={String(quiz.id)}>
+                                <Text style={styles.quizNameText}> {quiz.name} </Text>
+                               
+                                <Text style={styles.quizDescripitionText}> {quiz.description} </Text>
+                            </TouchableOpacity>
+                        ))}
+
+                    </ScrollView>
+                </View>
+
+            </View>
         </>
     );
 }

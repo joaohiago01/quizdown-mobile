@@ -35,6 +35,35 @@ const styles = StyleSheet.create({
         color: '#929292',
         backgroundColor: '#FFF',
         borderRadius: 8,
+    },
+
+    quizListContainer: {
+        alignItems: "center",
+    },
+
+    quizList: {
+        paddingHorizontal: 32,
+        paddingTop: 20,
+        
+    },
+
+    quizNameText: {
+        marginTop: 30,
+        color: "#FFF",
+        fontSize: 18,
+        fontFamily: 'Ubuntu_700Bold'
+    },
+
+    quizImage: {
+        marginTop: 20,
+        borderRadius: 8,
+    },
+
+    quizDescripitionText: {
+        color: '#FFF',
+        marginTop: 20,
+        fontSize: 13,
+        fontFamily: 'Ubuntu_700Bold',
     }
 
 });
