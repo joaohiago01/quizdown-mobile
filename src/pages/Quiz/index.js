@@ -23,7 +23,9 @@ const Quiz = () => {
     useEffect(() => {
         api.get(`questions/${routeParams.quiz_id}`).then(response => {
             setQuiz(response.data);
-            setQuestion(response.data[numberQuestion - 1]);
+            setQuestion(response.data.filter((index) => {
+                return index === numberQuestion - 1;
+            }));
         }).catch(reject => {
             navigation.goBack();
         });
@@ -37,7 +39,9 @@ const Quiz = () => {
 
     useEffect(() => {
         if (numberQuestion <= 10) {
-            setQuestion(quiz[numberQuestion - 1]);
+            setQuestion(quiz.filter((index) => {
+                return index === numberQuestion - 1;
+            }));
         } else {
             navigation.navigate('FinishQuiz', {
                 hits: hits,
@@ -52,7 +56,9 @@ const Quiz = () => {
     useEffect(() => {
         setPoints(points - 30);
         setNumberQuestion(numberQuestion + 1);
-        setQuestion(quiz[numberQuestion - 1]);
+        setQuestion(quiz.filter((index) => {
+            return index === numberQuestion - 1;
+        }));
     }, [jumps]);
 
     function chosenAlternative(alternative) {
