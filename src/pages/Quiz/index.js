@@ -55,10 +55,6 @@ const Quiz = () => {
         setQuestion(quiz[numberQuestion - 1]);
     }, [jumps]);
 
-    /*useEffect(() => {
-
-    }, []);*/
-
     function chosenAlternative(alternative) {
         if (alternative === question.rightAnswer) {
             setHits(hits + 1);

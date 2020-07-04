@@ -12,10 +12,9 @@ const Routes = () => {
     return (
         <NavigationContainer>
             <AppStack.Navigator headerMode="none" screenOptions={{cardStyle: {backgroundColor: '#000'}}}>
-                <AppStack.Screen name="FinishQuiz" component={FinishQuiz} />
                 <AppStack.Screen name="Home" component={Home} />
                 <AppStack.Screen name="Quiz" component={Quiz} />
-                
+                <AppStack.Screen name="FinishQuiz" component={FinishQuiz} />
             </AppStack.Navigator>
         </NavigationContainer>
     );
