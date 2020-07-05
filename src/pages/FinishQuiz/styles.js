@@ -59,6 +59,8 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         marginLeft: 40,
         marginRight: 40,
+        borderWidth: 1,
+        borderColor: '#FFF'
     },
 
     homeButtonText: {
@@ -76,6 +78,8 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         marginLeft: 40,
         marginRight: 40,
+        borderWidth: 1,
+        borderColor: '#FFF',
         marginTop: 20,
     },
 

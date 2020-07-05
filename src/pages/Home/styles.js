@@ -35,35 +35,50 @@ const styles = StyleSheet.create({
         color: '#929292',
         backgroundColor: '#FFF',
         borderRadius: 8,
+        paddingStart: 15
     },
 
     quizListContainer: {
         alignItems: "center",
-    },
-
-    quizList: {
-        paddingHorizontal: 32,
-        paddingTop: 20,
-        
+        margin: 10,
     },
 
     quizNameText: {
-        marginTop: 30,
+        marginTop: 40,
         color: "#FFF",
         fontSize: 18,
         fontFamily: 'Ubuntu_700Bold'
     },
 
     quizImage: {
-        marginTop: 20,
-        borderRadius: 8,
+        borderRadius: 90,
     },
 
     quizDescripitionText: {
         color: '#FFF',
-        marginTop: 20,
         fontSize: 13,
         fontFamily: 'Ubuntu_700Bold',
+    },
+
+    playButton: {
+        width: 200,
+        paddingTop: 15,
+        alignItems: "center",
+        backgroundColor: '#008080',
+        borderRadius: 8,
+        marginLeft: 50,
+        marginRight: 50,
+        marginTop: 20,
+        borderWidth: 1,
+        borderColor: '#FFF'
+    },
+
+    playButtonText: {
+        fontFamily: 'Ubuntu_700Bold',
+        alignItems: "center",
+        color: '#FFF',
+        fontSize: 16,
+        marginBottom: 10,
     }
 
 });

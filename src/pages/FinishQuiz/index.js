@@ -66,7 +66,7 @@ const FinishQuiz = () => {
                 <View style={styles.quizHeader}>
                     <Text style={styles.quizNameText}> {quiz.name} </Text>
                     <Text style={styles.quizStatusText}> {result} </Text>
-                    <SvgUri uri={quiz.image_url} width={100} height={100} style={styles.quizImage}></SvgUri>
+                    <SvgUri uri={quiz.image_url} width={300} height={200} style={styles.quizImage}></SvgUri>
                 </View>
 
                 <View style={styles.quizPoints}>

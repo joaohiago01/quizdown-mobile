@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { SvgUri } from 'react-native-svg';
 
@@ -30,8 +30,8 @@ const Home = () => {
     }
 
     return (
-        <>
-            <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
+            <ScrollView>
                 <View style={styles.quizDownText}>
                     <Text style={styles.quizDownText}> QuizDown </Text>
                 </View>
@@ -42,28 +42,27 @@ const Home = () => {
                 </View>
 
                 <View>
-                    <TextInput style={styles.textInput}> <Text> Pesquisar </Text> </TextInput>
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder="Pesquisar">
+                    </TextInput>
+
                 </View>
+                {quizzes.map(quiz => (
+                    <View key={String(quiz.id)} style={styles.quizListContainer}>
+                        <Text style={styles.quizNameText}>{quiz.name}</Text>
+                        <SvgUri style={styles.quizImage} width={300} height={200} uri={quiz.image_url}></SvgUri>
+                        <Text style={styles.quizDescripitionText}>{quiz.description}</Text>
 
-                <View style={styles.quizListContainer}>
-                    <ScrollView style={styles.quizList}>
+                        <TouchableOpacity style={styles.playButton} onPress={() => { handleNavigationToQuiz(quiz.id) }}>
+                            <Text style={styles.playButtonText}> Jogar </Text>
+                        </TouchableOpacity>
 
-                        {quizzes.map(quiz => (
-                            <TouchableOpacity
-                                onPress={() => {handleNavigationToQuiz(quiz.id)}}
-                                key={String(quiz.id)}>
-                                <Text style={styles.quizNameText}>{quiz.name}</Text>
-                                <SvgUri width={300} height={300} uri={quiz.image_url}></SvgUri>
-                                <Text style={styles.quizDescripitionText}>{quiz.description}</Text>
-                            </TouchableOpacity>
-                            
-                        ))}
+                    </View>
+                ))}
 
-                    </ScrollView>
-                </View>
-
-            </View>
-        </>
+            </ScrollView>
+        </SafeAreaView>
     );
 }
 
