@@ -3,8 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#000',
-        //backgroundColor: '#363636',
+        backgroundColor: '#363636',
         paddingHorizontal: 32,
         paddingTop: 20,
     },
@@ -32,8 +31,7 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     footer: {
-        backgroundColor: '#000',
-        //backgroundColor: '#363636',
+        backgroundColor: '#363636',
         borderTopWidth: StyleSheet.hairlineWidth,
         borderColor: '#999',
         paddingVertical: 10,
@@ -52,8 +50,7 @@ const styles = StyleSheet.create({
     },
     buttonOption: {
         width: '100%',
-        backgroundColor: '#FFF',
-        //backgroundColor: '#C4C4C4',
+        backgroundColor: '#C4C4C4',
         borderRadius: 10,
         height: 60,
         flexDirection: 'row',
@@ -74,7 +71,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto_500Medium',
     },
     jumpContainer: {
-        backgroundColor: '#000',
+        backgroundColor: '#363636',
     },
     jumpText: {
         marginLeft: 8,

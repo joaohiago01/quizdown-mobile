@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { SvgUri } from 'react-native-svg';
 
 import styles from './styles';
 import api from '../../services/api';
@@ -10,11 +11,22 @@ const FinishQuiz = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const routeParams = route.params;
+
     const [quiz, setQuiz] = useState({});
     const [user, setUser] = useState({});
+    const [totalPoints, setTotalPoints] = useState(0);
+    const [result, setResult] = useState('');
+
     useEffect(() => {
+
+        if (routeParams.hits > 0) {
+            setResult('Vitória!');
+        } else {
+            setResult('Derrota...');
+        }
+
         api.get(`quizzes/${routeParams.quiz_id}`).then(response => {
-            setQuiz(response.data.name);
+            setQuiz(response.data);
         });
 
         /*api.get(`users/${routeParams.user_id}`).then(response => {
@@ -27,7 +39,24 @@ const FinishQuiz = () => {
 
     function tryAgain() {
         //NESTE CASO TODOS OS PONTOS, PULOS E ACERTOS QUE OCORERAM NO QUIZ SERAM IGNORADOS
-        navigation.navigate('Quiz');
+        navigation.navigate('Quiz', {
+            user_id: user.id,
+            quiz_id: quiz.id,
+            jumps: user.jumps,
+            points: user.points
+        });
+    }
+
+    function finishQuiz() {
+        //setTotalPoints(quiz.pointValue + routeParams.points);
+        /*api.put(`users/${user.id}`).then(response => {
+            navigation.navigate('Home', {
+                user_id: user.id
+            });
+        });*/
+        navigation.navigate('Home', {
+            user_id: user.id
+        });//APENAS PARA FACILITAÇÃO DE NAVEGAÇÃO, REMOVER DEPOIS E DEIXAR APENAS O NAVIGATE QUE ESTÁ ACIMA
     }
 
     return (
@@ -36,18 +65,17 @@ const FinishQuiz = () => {
 
                 <View style={styles.quizHeader}>
                     <Text style={styles.quizNameText}> {quiz.name} </Text>
-                    <Text style={styles.quizStatusText}> Vitória! </Text>
-                    <Image style={styles.quizImage} source={require('../../assets/image-shigenki.png')} />
+                    <Text style={styles.quizStatusText}> {result} </Text>
+                    <SvgUri uri={quiz.image_url} width={100} height={100} style={styles.quizImage}></SvgUri>
                 </View>
 
                 <View style={styles.quizPoints}>
-                    <Text style={styles.quizPointsText}> Questões: {routeParams.hits}/10 </Text>
+                    <Text style={styles.quizPointsText}> Acertos: {routeParams.hits}/10 </Text>
                     <Text style={styles.quizPointsText}> Pontos: {routeParams.points} </Text>
                 </View>
 
-
                 <View style={styles.homeButton}>
-                    <TouchableOpacity onPress={() => { navigation.navigate('Home') }}>
+                    <TouchableOpacity onPress={finishQuiz}>
                         <Text style={styles.homeButtonText}> Home </Text>
                     </TouchableOpacity>
                 </View>

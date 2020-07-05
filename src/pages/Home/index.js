@@ -24,7 +24,8 @@ const Home = () => {
         navigation.navigate('Quiz', {
             user_id: 1,
             quiz_id: quiz_id,
-            jumps: 5
+            jumps: 5,
+            points: 180
         });
     }
 
@@ -55,6 +56,7 @@ const Home = () => {
                                 <SvgUri width={300} height={300} uri={quiz.image_url}></SvgUri>
                                 <Text style={styles.quizDescripitionText}>{quiz.description}</Text>
                             </TouchableOpacity>
+                            
                         ))}
 
                     </ScrollView>

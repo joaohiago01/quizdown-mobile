@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Image, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import styles from './styles';
@@ -11,76 +11,103 @@ const Quiz = () => {
     const route = useRoute();
     const routeParams = route.params;
 
+    const [questions, setQuestions] = useState([]);
     const [question, setQuestion] = useState({});
-    const [quiz, setQuiz] = useState([]);
 
-    const [jumps, setJumps] = useState(routeParams.jumps);
+    const [jumps, setJumps] = useState(0);
+    const [points, setPoints] = useState(0);
 
     const [numberQuestion, setNumberQuestion] = useState(1);
     const [hits, setHits] = useState(0);
-    const [points, setPoints] = useState(0);
 
     useEffect(() => {
+
         api.get(`questions/${routeParams.quiz_id}`).then(response => {
-            setQuiz(response.data);
-            console.log(response.data);
-            setQuestion(response.data.filter((index) => {
-                return index === numberQuestion - 1;
-            }));
+            setQuestions(response.data);
+            setQuestion(response.data.pop());
         }).catch(reject => {
             navigation.goBack();
         });
 
-        /*api.get(`users/${routeParams.user_id}`).then(response => {
-            setPoints(response.data.points);
-        }).catch(reject => {
-            navigation.goBack();
-        });*/
-    },[]);
+        setPoints(routeParams.points);
+        setJumps(routeParams.jumps);
 
-    useEffect(() => {
-        if (numberQuestion <= 10) {
-            setQuestion(quiz.filter((index) => {
-                return index === numberQuestion - 1;
-            }));
+    }, []);
+
+    function chosenAlternative(alternative) {
+        if (alternative === question.rightAnswer) {
+            setHits(hits + 1);
+        }
+
+        checkQuestions();
+
+    }
+
+    function checkQuestions() {
+        setNumberQuestion(numberQuestion + 1);
+        const nextQuestion = questions.pop();
+        if (nextQuestion != null) {
+            setQuestions(questions);
+            setQuestion(nextQuestion);
         } else {
+            let hitsCorrect = hits;
+            if (hits != 0) {
+                hitsCorrect = hits + 1;
+            }
             navigation.navigate('FinishQuiz', {
-                hits: hits,
+                hits: hitsCorrect,
                 points: points,
                 jumps: jumps,
                 user_id: routeParams.user_id,
                 quiz_id: routeParams.quiz_id,
             });
         }
-    }, [numberQuestion]);
-
-    useEffect(() => {
-        setPoints(points - 30);
-        setNumberQuestion(numberQuestion + 1);
-        setQuestion(quiz.filter((index) => {
-            return index === numberQuestion - 1;
-        }));
-    }, [jumps]);
-
-    function chosenAlternative(alternative) {
-        if (alternative === question.rightAnswer) {
-            setHits(hits + 1);
-            //styles.buttonOption.backgroundColor = '#05FF00';
-        } else {
-            //styles.buttonOption.backgroundColor = '#FF0000';
-        }
-        setNumberQuestion(numberQuestion + 1);
     }
 
     function nextQuestion() {
-
+        const skippedQuestion = question;
+        const nextQuestion = questions.pop();
+        if (nextQuestion == null) {
+            setQuestion(skippedQuestion);
+        } else {
+            setQuestion(nextQuestion);
+            const restQuestions = questions;
+            restQuestions.push(skippedQuestion);
+            restQuestions.sort(() => { });
+            setQuestions(restQuestions);
+        }
     }
 
     function jumpQuestion() {
-        if (jumps <= 0 || points <= 0) {
-            //MODAL
+        if (jumps <= 0) {
+            if (points >= 30) {
+                (
+                    Alert.alert('Seus Pulos Acabaram...', 'Comprar Pulo?', [
+                        {
+                            text: 'Sim',
+                            onPress: () => {
+                                setPoints(points - 30);
+                                setJumps(jumps + 1);
+                            }
+                        },
+                        {
+                            text: 'Não',
+                            onPress: () => { }
+                        }
+                    ],
+                        { cancelable: false })
+                )
+            } else {
+                (
+                    Alert.alert('Pontos insuficientes!')
+                )
+            }
         } else {
             setJumps(jumps - 1);
+            if (points > 0) {
+                setPoints(points - 30);
+            }
+            checkQuestions();
         }
     }
 
