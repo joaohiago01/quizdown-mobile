@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { useNavigation, useRoute, CommonActions } from '@react-navigation/native';
 import { SvgUri } from 'react-native-svg';
 
 import styles from './styles';
@@ -27,36 +27,48 @@ const FinishQuiz = () => {
 
         api.get(`quizzes/${routeParams.quiz_id}`).then(response => {
             setQuiz(response.data);
+            const percentage = routeParams.hits / 10;
+            const points = (percentage * response.data.pointValue) + routeParams.points;
+            setTotalPoints(points);
         });
 
-        /*api.get(`users/${routeParams.user_id}`).then(response => {
+        api.get(`users/${routeParams.user_id}`).then(response => {
             setUser(response.data);
-        });*/
-
-        //FAZER LÓGICA DE QUANTO PONTOS FORAM GANHOS APARTIR DOS ACERTOS PARA ATUALIZAR OS PONTOS DO USUÁRIO
+        });
 
     }, []);
 
     function tryAgain() {
-        //NESTE CASO TODOS OS PONTOS, PULOS E ACERTOS QUE OCORERAM NO QUIZ SERAM IGNORADOS
-        navigation.navigate('Quiz', {
-            user_id: user.id,
-            quiz_id: quiz.id,
-            jumps: user.jumps,
-            points: user.points
-        });
+        navigation.dispatch(CommonActions.reset({
+            index: 1,
+            routes: [
+                {
+                    name: 'Quiz',
+                    params: {
+                        user_id: user.id,
+                        quiz_id: quiz.id,
+                        jumps: user.jumps,
+                        points: user.points
+                    }
+                },
+            ],
+        }));
     }
 
     function finishQuiz() {
-        //setTotalPoints(quiz.pointValue + routeParams.points);
-        /*api.put(`users/${user.id}`).then(response => {
+        const skips = routeParams.jumps;
+
+        api.put(`users/${user.id}`, {
+            data: {
+                username: user.username,
+                points: totalPoints,
+                skips: skips
+            }
+        }).then(response => {
             navigation.navigate('Home', {
                 user_id: user.id
             });
-        });*/
-        navigation.navigate('Home', {
-            user_id: user.id
-        });//APENAS PARA FACILITAÇÃO DE NAVEGAÇÃO, REMOVER DEPOIS E DEIXAR APENAS O NAVIGATE QUE ESTÁ ACIMA
+        });
     }
 
     return (
@@ -71,7 +83,7 @@ const FinishQuiz = () => {
 
                 <View style={styles.quizPoints}>
                     <Text style={styles.quizPointsText}> Acertos: {routeParams.hits}/10 </Text>
-                    <Text style={styles.quizPointsText}> Pontos: {routeParams.points} </Text>
+                    <Text style={styles.quizPointsText}> Pontuação Atual: {totalPoints} </Text>
                 </View>
 
                 <View style={styles.homeButton}>

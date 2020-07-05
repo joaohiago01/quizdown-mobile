@@ -51,7 +51,7 @@ const Quiz = () => {
             setQuestion(nextQuestion);
         } else {
             let hitsCorrect = hits;
-            if (hits != 0) {
+            if (hits > 0) {
                 hitsCorrect = hits + 1;
             }
             navigation.navigate('FinishQuiz', {
