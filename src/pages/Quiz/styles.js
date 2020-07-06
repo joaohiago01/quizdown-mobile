@@ -21,11 +21,12 @@ const styles = StyleSheet.create({
         color: '#FFF',
         fontSize: 18,
         fontFamily: 'Ubuntu_700Bold',
+        marginTop : -50,
     },
     question: {
         color: '#FFF',
         fontSize: 18,
-        marginTop: 16,
+        marginTop: -10,
         fontFamily: 'Roboto_500Medium',
         lineHeight: 24,
         textAlign: "center"
@@ -40,13 +41,15 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
     },
     button: {
-        width: '50%',
+        width: '47%',
         backgroundColor: '#008080',
         borderRadius: 10,
         height: 50,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        marginRight: 10,
+        marginLeft: 5,
     },
     buttonOption: {
         width: '100%',

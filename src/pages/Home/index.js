@@ -20,6 +20,10 @@ const Home = () => {
         });
     }, []);
 
+    useEffect(()=> {
+       
+    })
+
     function handleNavigationToQuiz(quiz_id) {
         navigation.navigate('Quiz', {
             user_id: 1,
@@ -46,8 +50,10 @@ const Home = () => {
                         style={styles.textInput}
                         placeholder="Pesquisar">
                     </TextInput>
-
                 </View>
+
+               
+
                 {quizzes.map(quiz => (
                     <View key={String(quiz.id)} style={styles.quizListContainer}>
                         <Text style={styles.quizNameText}>{quiz.name}</Text>
