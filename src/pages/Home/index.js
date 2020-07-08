@@ -12,17 +12,24 @@ const Home = () => {
     const route = useRoute();
     const routeParams = route.params;
 
+    const [textInput, setTextInput] = useState('');
+
     const [quizzes, setQuizzes] = useState([]);
+
+    const [user, setUser] = useState({});
+
+    
 
     useEffect(() => {
         api.get('quizzes').then(response => {
             setQuizzes(response.data);
         });
-    }, []);
 
-    useEffect(()=> {
-       
-    })
+        api.get(`users/${1}`).then(response => {
+            setUser(response.data);
+        });
+
+    }, []);
 
     function handleNavigationToQuiz(quiz_id) {
         navigation.navigate('Quiz', {
@@ -30,6 +37,16 @@ const Home = () => {
             quiz_id: quiz_id,
             jumps: 5,
             points: 180
+        });
+    }
+
+    function filterSearch(text) {
+        const newData = quizzes.filter(function(item){
+            const itemData = item.name.toUpperCase()
+            const textData = text.toUpperCase()
+            return itemData.indexOf(textData) > -1
+        });
+        this.setQuizzes(newData)({
         });
     }
 
@@ -41,14 +58,16 @@ const Home = () => {
                 </View>
 
                 <View style={styles.userInfo}>
-                    <Text style={styles.userInfoText}> User </Text>
-                    <Text style={styles.userInfoText}> Pontos: 100 </Text>
+                    <Text style={styles.userInfoText}> {user.username} </Text>
+                    <Text style={styles.userInfoText}> Pontos: {user.points} </Text>
                 </View>
 
                 <View>
                     <TextInput
                         style={styles.textInput}
-                        placeholder="Pesquisar">
+                        placeholder="Pesquisar"
+                        onChangeText={(text) => filterSearch(text)}
+                        value={textInput}>
                     </TextInput>
                 </View>
 

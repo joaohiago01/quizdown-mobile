@@ -19,7 +19,7 @@ const FinishQuiz = () => {
 
     useEffect(() => {
 
-        if (routeParams.hits > 0) {
+        if (routeParams.hits >= 7) {
             setResult('Vitória!');
         } else {
             setResult('Derrota...');

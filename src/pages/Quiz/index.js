@@ -4,6 +4,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 
 import styles from './styles';
 import api from '../../services/api';
+import { color } from 'react-native-reanimated';
 
 const Quiz = () => {
 
@@ -167,5 +168,7 @@ const Quiz = () => {
         </>
     );
 }
+
+
 
 export default Quiz;
