@@ -4,7 +4,6 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 
 import styles from './styles';
 import api from '../../services/api';
-import { color } from 'react-native-reanimated';
 
 const Quiz = () => {
 
@@ -52,9 +51,6 @@ const Quiz = () => {
             setQuestion(nextQuestion);
         } else {
             let hitsCorrect = hits;
-            if (hits > 0) {
-                hitsCorrect = hits + 1;
-            }
             navigation.navigate('FinishQuiz', {
                 hits: hitsCorrect,
                 points: points,

@@ -47,7 +47,7 @@ const FinishQuiz = () => {
                     params: {
                         user_id: user.id,
                         quiz_id: quiz.id,
-                        jumps: user.jumps,
+                        jumps: user.skips,
                         points: user.points
                     }
                 },
@@ -58,13 +58,7 @@ const FinishQuiz = () => {
     function finishQuiz() {
         const skips = routeParams.jumps;
 
-        api.put(`users/${user.id}`, {
-            data: {
-                username: user.username,
-                points: totalPoints,
-                skips: skips
-            }
-        }).then(response => {
+        api.put(`users/${user.id}/${totalPoints}/${skips}`).then(response => {
             navigation.navigate('Home', {
                 user_id: user.id
             });
